@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs"; // Assuming you're using bcryptjs for password hashing
-import connect from "@/lib/clientPromise";
 import User from "@/app/models/User";
+import connect from "@/app/utils/clientPromise";
 
 export const authOptions = {
   // Configure one or more authentication providers

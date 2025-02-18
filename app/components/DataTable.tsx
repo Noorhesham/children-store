@@ -81,14 +81,14 @@ export function DataTable<TData extends TableData, TValue>({
       )} */}
       <div className="flex justify-between items-center py-4">
         <div className="flex gap-2 items-center">
-          {table.getColumn(`name`) && (
+          {/* {table?.getColumn(`name`) && (
             <Input
               placeholder="Filter names..."
               value={(table.getColumn(`name`)?.getFilterValue() as string) ?? ""}
               onChange={(event) => table.getColumn(`name`)?.setFilterValue(event.target.value)}
               className="max-w-sm"
             />
-          )}
+          )} */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">

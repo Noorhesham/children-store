@@ -2,16 +2,14 @@
 "use client";
 
 import { z } from "zod";
-import { FormField } from "@/types";
-import { fetchData } from "@/app/actions/Server";
 import MaxWidthWrapper from "../defaults/MaxWidthWrapper";
 import Image from "next/image";
 import DynamicForm from "./DynamicForm";
-import { useAuth } from "@/app/context/AuthProvider";
-import cookies from "js-cookie";
+import { IFormField } from "@/app/types";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-const loginFormFields: FormField[] = [
+import { useToast } from "@/hooks/use-toast";
+const loginFormFields: IFormField[] = [
   {
     name: "email",
     label: "Email Address",
@@ -33,16 +31,19 @@ const loginFormFields: FormField[] = [
 ];
 
 export default function LoginPage() {
-  const { setAuth } = useAuth();
-  const handleLogin = async (values: any) => {
+  const { toast } = useToast();
+  const router = useRouter();
+  const handleLogin = async (data: any) => {
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
       redirect: false,
     });
     console.log(res);
-    if (res?.ok) router.push("/dashboard/category");
-    if (res?.error) setServerError(res.error);
+    if (res?.ok) router.push("/dashboard");
+    if (res?.error) {
+      throw new Error(res.error);
+    }
   };
 
   return (
@@ -61,6 +62,8 @@ export default function LoginPage() {
           <Image fill src="/winter.jpg" alt="Image" className="absolute inset-0 h-full w-full object-cover" />
         </div>
       </MaxWidthWrapper>
-    </div>
+    </div> //jen1pkkey8
+    //public_lMFAR9cVVvCyAGwYUTBsJEK229w=
+    //
   );
 }

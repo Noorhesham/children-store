@@ -3,26 +3,15 @@
 
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z, ZodTypeAny } from "zod";
 import { Form, FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import FormSelect from "../inputs/FormSelect";
 import FormInput from "../inputs/FormInput";
-import { IFormField } from "@/types";
-import { DynamicOptions } from "../DynamicOptions";
 import { PhotoInput } from "../inputs/PhotoInput";
-
-interface DynamicFormProps {
-  fields: IFormField[];
-  onSubmit: (values: any) => Promise<void>;
-  defaultValues?: Record<string, any>;
-  submitButtonText?: string;
-  className?: string;
-  children?: React.ReactNode;
-  fieldArrays?: any[];
-}
+import { DynamicFormProps } from "@/app/types";
 
 export default function DynamicForm({
   fields,

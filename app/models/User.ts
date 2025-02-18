@@ -1,9 +1,28 @@
-import mongoose, { Schema } from "mongoose";
-const userSchema = new Schema({
-  name: String,
-  email: { type: String, unique: true, required: true },
-  password: { type: String, select: false, required: true },
-});
+import mongoose from "mongoose";
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
-export default User;
+const userSchema = new mongoose.Schema(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    phone: { type: String },
+    address: { type: String },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
+    avatar: {
+      secure_url: { type: String },
+      public_id: { type: String },
+    },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.models.User || mongoose.model("User", userSchema);
