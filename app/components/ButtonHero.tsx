@@ -13,7 +13,7 @@ const HeroButton = ({ children, tag, onClick, className = "" }: HeroButtonProps)
   return (
     <button
       onClick={onClick}
-      className={`group relative duration-150    inline-flex items-center justify-center bg-white border-2 border-black rounded-[100px] px-8 py-4 text-lg font-bold transition-all duration-200 hover:translate-x-[-4px] hover:translate-y-[-4px] ${className}`}
+      className={`group relative duration-150    inline-flex items-center justify-center bg-white border-2 border-black rounded-[100px] px-8 py-2 text-lg font-bold transition-all duration-200 hover:translate-x-[-4px] hover:translate-y-[-4px] ${className}`}
     >
       <div className="relative z-10 flex items-center gap-3">
         {" "}

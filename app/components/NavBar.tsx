@@ -4,24 +4,26 @@ import Logo from "./Logo";
 import Cart from "./Cart";
 
 import MaxWidthWrapper from "./defaults/MaxWidthWrapper";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
+import HeroButton from "./ButtonHero";
 
 const NavBar = () => {
   return (
-    <nav className=" bg-white sticky z-50  top-0  inset-0 ">
-      <header className=" relative bg-white">
+    <nav className=" bg-main backdrop-blur-md sticky z-50  top-0  inset-0 ">
+      <header className=" relative bg-main">
         <MaxWidthWrapper noPadding>
           <div className=" border-b border-gray-200">
-            <div className=" flex  items-center">
+            <div className=" flex flex-row-reverse  justify-between w-full  items-center">
               <div className=" ml-4 flex lg:ml-0">
                 <Logo />
               </div>
 
-              <div className=" ml-auto flex items-center">
-                <div className=" flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <div className=" ml-4 flex items-center justify-center text-center ">
-                    <Cart />
-                  </div>
-                </div>
+              <div className=" flex items-center gap-5">
+                <Button>
+                  <ShoppingCart />
+                </Button>
+                <HeroButton className=" text-sm">الكاتلوج</HeroButton>
               </div>
             </div>
           </div>
