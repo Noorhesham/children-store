@@ -5,8 +5,8 @@ import NavBar from "./components/NavBar";
 import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Cairo({
-  variable: "--font-geist-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} antialiased`}>
+    <html dir="rtl" lang="ar">
+      <body className={`${geistSans.className} antialiased`}>
         <NavBar />
         <div className="">{children}</div> <Toaster />
       </body>

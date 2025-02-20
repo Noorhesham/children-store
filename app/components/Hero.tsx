@@ -1,89 +1,88 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import MaxWidthWrapper from "./defaults/MaxWidthWrapper";
-
+import Paragraph from "./Paragraph";
+import gsap from "gsap";
+import { FollowingEyes } from "./FollowingEyes";
+import HeroButton from "./ButtonHero";
+const specialities = [
+  { text: "ألعاب تعليمية", color: "!text-green-400" },
+  {
+    text: "كتب اطفال",
+    color: "!text-pink-400",
+  },
+  {
+    text: "لوحات وكتب ",
+    color: "!text-red-400",
+  },
+];
 const HeroSection = () => {
+  const [index, setIndex] = useState(0);
+
+  const animateHeader = React.useCallback(() => {
+    const t = setTimeout(
+      () =>
+        gsap.timeline().to(".header", {
+          y: -110,
+
+          onComplete: () => {
+            setIndex((prev) => (prev + 1) % 3);
+          },
+        }),
+      1700
+    );
+    return t;
+  }, []);
+  useEffect(() => {
+    const timer = animateHeader();
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".header", { y: 40 }, { y: 0, duration: 0.5 });
+    });
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+    };
+  }, [animateHeader, index]);
   return (
-    <div className=" h-screen bg-main">
-      <MaxWidthWrapper>
-        {/* Hero Section */}
-        <div className="relative">
-          <div>
-            <div className="grid md:grid-cols-2 gap-8 items-center py-12">
-              <div className="space-y-6">
-                <h1 className="text-[#00B3B0] text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  Nurturing little ones with love and care.
-                </h1>
-                <p className="text-gray-700 text-lg md:text-xl max-w-lg">
-                  Introducing the softest and most absorbent diapers for your little one's ultimate comfort!
-                </p>
-                <button className="bg-[#FF6B95] text-white px-8 py-3 rounded-md hover:bg-[#FF6B95]/90 transition-colors">
-                  Pregnancy Tools
-                </button>
-              </div>
-              <div className="relative">
-                <Image src="/item.png" alt="Mother and baby" width={600} height={500} className="object-contain" />
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0">
-                  <div className="text-[#00B3B0] opacity-20">{/* Rocket and planet illustrations would go here */}</div>
-                </div>
-                <div className="absolute bottom-10 left-10">
-                  <div className="text-[#FF6B95]">{/* Star decorations */}</div>
-                </div>
-              </div>
-            </div>
+    <MaxWidthWrapper className=" !pt-32  relative flex justify-center items-center ">
+      <div className="flex flex-col gap-4 justify-center items-center">
+        <div className="flex flex-col font-extrabold  relative z-10 text-center text-black text-7xl items-start">
+          <h1 className=" ">اكتشف عالم مسلم كيدز الملئ</h1>{" "}
+          <div className="flex mt-8  items-center gap-4">
+            بالتعلم <FollowingEyes />و المرح !
           </div>
         </div>
-
-        {/* Bottom Features */}
-        <div className="bg-[#00B3B0] py-8">
-          <MaxWidthWrapper>
-            <div className="grid md:grid-cols-3 gap-8 text-white text-center">
-              <div className="flex flex-col items-center space-y-2">
-                <div className="bg-white p-3 rounded-full">
-                  <Image
-                    src="/placeholder.svg?height=40&width=40"
-                    alt="Pure Protection"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="font-semibold">Pure Protection</h3>
-                <p className="text-sm">Hypoallergenic, fragrance free diapers.</p>
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="bg-white p-3 rounded-full">
-                  <Image
-                    src="/placeholder.svg?height=40&width=40"
-                    alt="Paraben-free"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="font-semibold">Paraben-free</h3>
-                <p className="text-sm">Perfectly soft on your baby's delicate skin.</p>
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="bg-white p-3 rounded-full">
-                  <Image
-                    src="/placeholder.svg?height=40&width=40"
-                    alt="The Best"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                  />
-                </div>
-                <h3 className="font-semibold">The Best</h3>
-                <p className="text-sm">A touch of comfort for your little one.</p>
-              </div>
+        <div className="flex flex-row-reverse  head-1 lg:w-full w-full  font-extrabold  items-start justify-between  gap-4">
+          <div className=" w-44 h-40 relative">
+            <Image alt="" fill className=" object-cover" src={"/65140083374b8498847099e3_Group 11102.svg"} />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="overflow-hidden relative !w-fit h-[8.9rem] font-extrabold">
+              <Paragraph
+                height=" h-10 lg:h-[8.9rem] !font-extrabold"
+                animate={false}
+                text={specialities[index].text}
+                className={`header  bg-gradient-to-br from-purple-400 to-pink-400 via-violet-600
+               text-transparent bg-clip-text  !text-center  !flex-nowrap text-nowrap !font-extrabold
+                !w-fit`}
+              />
             </div>
-          </MaxWidthWrapper>
+            <p className=" text-muted-foreground text-base mt-4 font-semibold">
+              يلتقي التعلُّم والترفيه في عالمٍ ممتع ونافع لأطفالك
+            </p>
+          </div>
+          <div className=" w-36 h-36 top-20 z-[1]  right-32 absolute  rotate-animation">
+            <Image src={"/rotate.svg"} alt="" fill />
+          </div>
+          <div className=" w-36 h-36 top-20 z-[1]  left-32 absolute  ">
+            <Image src={"/bomb.svg"} alt="" fill />
+          </div>
         </div>
-      </MaxWidthWrapper>
-    </div>
+        <HeroButton tag="اكتشف">منتجاتنا</HeroButton>
+      </div>
+    </MaxWidthWrapper>
   );
 };
 
