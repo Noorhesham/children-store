@@ -42,7 +42,7 @@ export function ProductForm({ defaultValues }: { defaultValues?: any }) {
       : await createEntity("Product", values);
     return res;
   };
-
+  console.log(categories);
   const productFields: IFormField[] = [
     {
       name: "title",
@@ -83,7 +83,7 @@ export function ProductForm({ defaultValues }: { defaultValues?: any }) {
       validation: productValidation.category,
       options: isLoading
         ? []
-        : categories?.data?.data.map((p: any) => ({
+        : categories?.products.map((p: any) => ({
             value: p._id.toString(), // تحويل ObjectId إلى string
             name: p.name,
           })) || [],
