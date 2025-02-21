@@ -24,7 +24,7 @@ const productValidation = {
 
 export function ProductForm({ defaultValues }: { defaultValues?: any }) {
   const { data: categories, isLoading } = useGetEntity({
-    entityName: "category",
+    entityName: "Category",
     key: "category",
   });
 
