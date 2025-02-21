@@ -29,20 +29,27 @@ export const PriceDisplay = ({ basePrice, salePrice, className }: PriceDisplayPr
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const detectCurrency = (): CurrencyCode => {
-      const locale = navigator.language || "ar-EG";
-      console.log(locale)
-      // Check for specific country codes in the locale string
-      if (locale.includes("US")) return "USD";
-      if (locale.includes("FR") || locale.includes("DE") || locale.includes("ES") || locale.includes("IT"))
-        return "EUR";
-      if (locale.includes("SA")) return "SAR";
-      if (locale.includes("AE")) return "AED";
-      return "EGP";
+    // Detect the user's country using IP geolocation
+    const detectCurrency = async (): Promise<CurrencyCode> => {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        const countryCode = data.country; // e.g., "US", "FR", "SA", etc.
+
+        // Determine the currency based on country code
+        if (countryCode === "US") return "USD";
+        if (["FR", "DE", "IT", "ES"].includes(countryCode)) return "EUR";
+        if (countryCode === "SA") return "SAR";
+        if (countryCode === "AE") return "AED";
+        return "EGP";
+      } catch (error) {
+        console.error("Error detecting location:", error);
+        return "EGP";
+      }
     };
 
-    const updatePrices = () => {
-      const detectedCurrency = detectCurrency();
+    const updatePrices = async () => {
+      const detectedCurrency = await detectCurrency();
       const conversionRate = CURRENCY_CONFIG[detectedCurrency].rate;
 
       setCurrency(detectedCurrency);
@@ -65,18 +72,18 @@ export const PriceDisplay = ({ basePrice, salePrice, className }: PriceDisplayPr
       {salePrice && salePrice > 0 ? (
         <>
           <span className="text-gray-400 line-through">
-            {CURRENCY_CONFIG[currency].symbol}
             {convertedPrices.base.toFixed(2)}
+            {CURRENCY_CONFIG[currency].symbol}
           </span>
           <span className="text-[#6B4EFF] font-semibold">
-            {CURRENCY_CONFIG[currency].symbol}
             {convertedPrices.sale?.toFixed(2)}
+            {CURRENCY_CONFIG[currency].symbol}
           </span>
         </>
       ) : (
         <span className="text-[#6B4EFF] font-semibold">
-          {CURRENCY_CONFIG[currency].symbol}
           {convertedPrices.base.toFixed(2)}
+          {CURRENCY_CONFIG[currency].symbol}
         </span>
       )}
     </div>
