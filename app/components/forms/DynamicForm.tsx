@@ -55,7 +55,7 @@ export default function DynamicForm({
       setError(null);
       const res = await onSubmit(values);
       console.log(values);
-      if (res.error) throw new Error(res.error);
+      if (res?.error || !res.ok) throw new Error(res.error);
       toast({
         title: "Success",
         description: "Operation completed successfully",
@@ -63,11 +63,11 @@ export default function DynamicForm({
       });
     } catch (err) {
       console.error("Form submission error:", err);
-      setError(err.message || "An error occurred");
+      setError(err?.message || err.error || "An error occurred");
 
       toast({
         title: "Error",
-        description: err.message || "Failed to submit form",
+        description: err?.message | err.error || "Failed to submit form",
         variant: "destructive",
       });
     } finally {
