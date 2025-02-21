@@ -1,7 +1,7 @@
 import Product from "@/app/models/Product";
 import Order from "@/app/models/Order";
 import Category from "../models/Category";
-export type ModelProps = "product" | "order" | "category";
+export type ModelProps = "Product" | "Order" | "Category";
 
 const models: Record<ModelProps, any> = {
   Product,
