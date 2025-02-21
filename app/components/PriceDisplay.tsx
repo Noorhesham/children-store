@@ -10,58 +10,35 @@ interface PriceDisplayProps {
   className?: string;
 }
 
-// Currency configuration
+// Updated and more precise conversion rates
 const CURRENCY_CONFIG = {
-  EGP: {
-    symbol: "ج.م",
-    rate: 1,
-  },
-  USD: {
-    symbol: "$",
-    rate: 0.021,
-  },
-  EUR: {
-    symbol: "€",
-    rate: 0.019,
-  },
-  SAR: {
-    symbol: "﷼",
-    rate: 0.078,
-  },
-  AED: {
-    symbol: "د.إ",
-    rate: 0.077,
-  },
+  EGP: { symbol: "ج.م", rate: 1 },
+  USD: { symbol: "$", rate: 0.032 }, // 1 EGP ≈ 0.032 USD
+  EUR: { symbol: "€", rate: 0.029 }, // 1 EGP ≈ 0.029 EUR
+  SAR: { symbol: "﷼", rate: 0.2 }, // 1 EGP ≈ 0.20 SAR
+  AED: { symbol: "د.إ", rate: 0.2 }, // 1 EGP ≈ 0.20 AED
 };
 
 type CurrencyCode = keyof typeof CURRENCY_CONFIG;
 
 export const PriceDisplay = ({ basePrice, salePrice, className }: PriceDisplayProps) => {
   const [currency, setCurrency] = useState<CurrencyCode>("EGP");
-  const [convertedPrices, setConvertedPrices] = useState<{
-    base: number;
-    sale?: number;
-  }>({ base: basePrice });
+  const [convertedPrices, setConvertedPrices] = useState<{ base: number; sale?: number }>({
+    base: basePrice,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const detectCurrency = () => {
-      // Implement your currency detection logic here
-      // This is a simplified example using browser locale
-      const userLocale = navigator.language.split("-")[1] || "EG";
-
-      switch (userLocale) {
-        case "US":
-          return "USD";
-        case "EU":
-          return "EUR";
-        case "SA":
-          return "SAR";
-        case "AE":
-          return "AED";
-        default:
-          return "EGP";
-      }
+    const detectCurrency = (): CurrencyCode => {
+      const locale = navigator.language || "ar-EG";
+      console.log(locale)
+      // Check for specific country codes in the locale string
+      if (locale.includes("US")) return "USD";
+      if (locale.includes("FR") || locale.includes("DE") || locale.includes("ES") || locale.includes("IT"))
+        return "EUR";
+      if (locale.includes("SA")) return "SAR";
+      if (locale.includes("AE")) return "AED";
+      return "EGP";
     };
 
     const updatePrices = () => {
@@ -85,16 +62,23 @@ export const PriceDisplay = ({ basePrice, salePrice, className }: PriceDisplayPr
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      {salePrice && (
-        <span className="text-gray-400 line-through">
+      {salePrice && salePrice > 0 ? (
+        <>
+          <span className="text-gray-400 line-through">
+            {CURRENCY_CONFIG[currency].symbol}
+            {convertedPrices.base.toFixed(2)}
+          </span>
+          <span className="text-[#6B4EFF] font-semibold">
+            {CURRENCY_CONFIG[currency].symbol}
+            {convertedPrices.sale?.toFixed(2)}
+          </span>
+        </>
+      ) : (
+        <span className="text-[#6B4EFF] font-semibold">
           {CURRENCY_CONFIG[currency].symbol}
           {convertedPrices.base.toFixed(2)}
         </span>
       )}
-      <span className="text-[#6B4EFF] font-semibold">
-        {CURRENCY_CONFIG[currency].symbol}
-        {(convertedPrices.sale || convertedPrices.base).toFixed(2)}
-      </span>
     </div>
   );
 };

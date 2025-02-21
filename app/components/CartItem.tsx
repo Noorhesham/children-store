@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { useCart } from "../utils/CartProvider";
+import { PriceDisplay } from "./PriceDisplay";
 
 const CartItem = ({ item }: { item: any }) => {
   const { updateQuantity } = useCart();
@@ -17,7 +18,7 @@ const CartItem = ({ item }: { item: any }) => {
         </div>
         <div className="flex-1">
           <h3 className="font-semibold">{item.product.title}</h3>
-          <div className="text-sm text-gray-500">{item.price} ج.م</div>
+          <PriceDisplay basePrice={item.product.price} salePrice={item.product.sale || 0} />
           <div className="flex items-center gap-2 mt-2">
             <Button
               variant="outline"
@@ -38,7 +39,7 @@ const CartItem = ({ item }: { item: any }) => {
             </Button>
           </div>
         </div>
-        <div className="text-right">{item.price * item.quantity} ريال</div>
+        <PriceDisplay basePrice={item.price * item.quantity} />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { AddToCart } from "@/app/components/AddToCart";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import ProductsAnimation from "@/app/components/ProductsAnimation";
 import product from "@/app/models/Product";
+import { PriceDisplay } from "@/app/components/PriceDisplay";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const productData = await getEntity("product", params.id);
@@ -53,14 +54,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <h1 className="text-3xl font-bold">{productData.data.title}</h1>
           <p className="text-gray-600">{productData.data.description}</p>
           <div className="flex items-center gap-4">
-            {showSalePrice ? (
-              <>
-                <div className="text-2xl font-bold text-red-600">{productData.data.sale} ج.م</div>
-                <div className="text-lg text-gray-500 line-through">{productData.data.price} ج.م</div>
-              </>
-            ) : (
-              <div className="text-2xl font-bold">{productData.data.price} ج.م</div>
-            )}
+            <PriceDisplay basePrice={productData.data.price} salePrice={productData.data.sale} />
           </div>
           <AddToCart product={productData.data} />
         </div>

@@ -4,6 +4,7 @@ import ImageSlider from "./ImageSlider";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { IProduct } from "../types";
+import { PriceDisplay } from "./PriceDisplay";
 
 export default function ProductCard({ product }: { product: IProduct }) {
   const salePrice = product.price - product.sale || 0;
@@ -60,10 +61,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
       <div className="space-y-2">
         <div className="text-sm text-gray-500 uppercase">{product.category.name}</div>
         <h3 className="font-semibold truncate">{product.title}</h3>
-        <div className="flex items-center gap-2">
-          {salePrice > 0 && <span className="text-gray-400 line-through">${product.price.toFixed(2)}</span>}
-          <span className="text-[#6B4EFF] font-semibold">{product.price.toFixed(2)}</span>
-        </div>
+        <PriceDisplay basePrice={product.price} salePrice={salePrice} />
       </div>
     </Link>
   );

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Suspense } from "react";
 import HeroSection from "../components/HeroSection";
 import InfiniteMoveSection from "../components/IfinteTechStack";
