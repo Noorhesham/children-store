@@ -7,6 +7,7 @@ import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import ProductsAnimation from "@/app/components/ProductsAnimation";
 import Product from "@/app/models/Product";
 import { PriceDisplay } from "@/app/components/PriceDisplay";
+import connect from "@/app/utils/clientPromise";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const productData = await getEntity("product", params.id);
@@ -28,6 +29,8 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
+  await connect();
+
   const productData = await getEntity("product", params.id, "en", ["category"]);
   if (!productData?.data) {
     notFound();
