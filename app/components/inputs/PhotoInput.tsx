@@ -1,4 +1,3 @@
-// components/PhotoInput.tsx
 "use client";
 
 import { useFormContext } from "react-hook-form";
@@ -13,25 +12,30 @@ interface PhotoInputProps {
   name: string;
   value?: Array<{ secure_url: string; publicId: string }>;
 }
+
 interface ImageType {
   secure_url: string;
   publicId: string;
 }
+
 export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
   const { setValue, watch } = useFormContext();
   const [isUploading, setIsUploading] = useState(false);
-  const currentImages = watch(name) || [];
+
+  // Ensure we always have an array, even if the watched value isn't one.
+  const watchedValue = watch(name);
+  const currentImages: ImageType[] = Array.isArray(watchedValue) ? watchedValue : [watchedValue];
 
   const handleUpload = useCallback(
     async (files: FileList) => {
       try {
         setIsUploading(true);
-        setValue("isUploading", true); // إضافة حالة التحميل للنموذج
+        setValue("isUploading", true); // set upload state in the form
 
         const uploadPromises = Array.from(files).map((file) => uploadImageToImageKit(file));
 
         const results = await Promise.all(uploadPromises);
-        const newImages = results.map((res) => ({
+        const newImages: ImageType[] = results.map((res) => ({
           secure_url: res.url,
           publicId: res.fileId,
         }));
@@ -41,7 +45,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
         console.error("Upload failed:", error);
       } finally {
         setIsUploading(false);
-        setValue("isUploading", false); // إعادة تعيين حالة التحميل
+        setValue("isUploading", false);
       }
     },
     [currentImages, name, setValue]
@@ -80,7 +84,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
               size="sm"
               className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={() => handleDelete(image.publicId)}
-              disabled={isUploading} // تعطيل الزر أثناء التحميل
+              disabled={isUploading}
             >
               <Trash className="h-4 w-4" />
             </Button>
