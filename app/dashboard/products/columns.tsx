@@ -75,7 +75,7 @@ export const productColumns: ColumnDef<IProduct>[] = [
               title="تعديل المنتج"
               content={<ProductForm defaultValues={product} />}
             />
-            <DeleteSingle data={product} entity="product" />
+            <DeleteSingle data={product} entity="Product" />
           </DropdownMenuContent>
         </DropdownMenu>
       );

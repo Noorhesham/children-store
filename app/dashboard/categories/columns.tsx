@@ -57,7 +57,7 @@ export const categoryColumns: ColumnDef<ICategory>[] = [
               title="تعديل التصنيف"
               content={<CategoryForm defaultValues={product} />}
             />
-            <DeleteSingle data={product} entity="category" />
+            <DeleteSingle data={product} entity="Category" />
           </DropdownMenuContent>
         </DropdownMenu>
       );

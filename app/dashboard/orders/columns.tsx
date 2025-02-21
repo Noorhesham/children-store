@@ -64,7 +64,7 @@ export const orderColumns: ColumnDef<IOrder>[] = [
               title="تعديل التصنيف"
               content={<OrderForm defaultValues={product} />}
             />
-            <DeleteSingle data={product} entity="order" />
+            <DeleteSingle data={product} entity="Order" />
           </DropdownMenuContent>
         </DropdownMenu>
       );

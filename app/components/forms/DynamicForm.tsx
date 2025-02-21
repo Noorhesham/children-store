@@ -55,7 +55,7 @@ export default function DynamicForm({
       setError(null);
       const res = await onSubmit(values);
       console.log(res);
-      if (res?.error || !res?.ok) throw new Error(res.error);
+      if (res?.error) throw new Error(res.error);
       toast({
         title: "Success",
         description: "Operation completed successfully",
