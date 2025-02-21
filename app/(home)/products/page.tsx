@@ -1,12 +1,12 @@
 import ProductGrid from "@/app/components/ProductGrid";
-import ProductList from '@/app/components/ProductList';
-import React from "react";
+import ProductList from "@/app/components/ProductList";
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div>
+    <Suspense>
       <ProductList />
-    </div>
+    </Suspense>
   );
 };
 
