@@ -8,7 +8,7 @@ import FeaturedProducts from "../components/Featured";
 import connect from "../utils/clientPromise";
 import StoreBenefits from "../components/Benefits";
 import NewArrivals from "../components/NewArrivals";
-import product from "../models/Product.ts";
+import product from "../models/Product";
 import ExploreSection from "../components/ExploreSection";
 
 interface PageProps {

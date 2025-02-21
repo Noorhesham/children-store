@@ -11,7 +11,7 @@ import FormSelect from "../inputs/FormSelect";
 import FormInput from "../inputs/FormInput";
 import { PhotoInput } from "../inputs/PhotoInput";
 import { useToast } from "../../../hooks/use-toast";
-import { DynamicFormProps } from "@/types";
+import { DynamicFormProps } from "@/app/types";
 
 export default function DynamicForm({
   fields,
