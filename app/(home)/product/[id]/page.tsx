@@ -10,6 +10,8 @@ import { PriceDisplay } from "@/app/components/PriceDisplay";
 import connect from "@/app/utils/clientPromise";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
+  await connect();
+
   const productData = await getEntity("product", params.id);
 
   if (!productData?.data) {
