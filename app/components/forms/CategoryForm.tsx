@@ -12,8 +12,8 @@ const CategoryForm = ({ defaultValues }: { defaultValues?: any }) => {
   const onSubmit = async (values: any) => {
     const image = values.image?.[0];
     const res = defaultValues
-      ? await updateEntity("category", defaultValues._id, { ...values, image })
-      : await createEntity("category", { ...values, image });
+      ? await updateEntity("Category", defaultValues._id, { ...values, image })
+      : await createEntity("Category", { ...values, image });
     return res;
   };
   return (

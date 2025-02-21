@@ -38,8 +38,8 @@ export function ProductForm({ defaultValues }: { defaultValues?: any }) {
 
   const onSubmit = async (values: any) => {
     const res = defaultValues
-      ? await updateEntity("product", defaultValues._id, values)
-      : await createEntity("product", values);
+      ? await updateEntity("Product", defaultValues._id, values)
+      : await createEntity("Product", values);
     return res;
   };
 
