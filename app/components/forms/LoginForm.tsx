@@ -39,7 +39,8 @@ export default function LoginPage() {
       redirect: false,
     });
     console.log(res);
-    if (res?.ok) return router.push("/dashboard");
+    if (res?.ok)  router.push("/dashboard");
+    return res;
   };
 
   return (
