@@ -18,7 +18,7 @@ export default function ProductList() {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, isLoading } = useInfiniteQuery({
     queryKey: ["products", category, search],
-    queryFn: ({ pageParam = 1 }) => getEntities("product", { page: pageParam, category, search, locale: "en" }),
+    queryFn: ({ pageParam = 1 }) => getEntities("Product", { page: pageParam, category, search, locale: "en" }),
     getNextPageParam: (lastPage, pages) => (lastPage.hasMore ? pages.length + 1 : undefined),
   });
 
