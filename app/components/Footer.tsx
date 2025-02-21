@@ -151,15 +151,21 @@ export default function Footer() {
       {/* Copyright & Payment Methods */}
       <div className="bg-[#FFD93D] px-4 py-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">© 2023 titoo. All Rights Reserved.</p>
-          <div className="flex gap-2">
+          <p className="text-sm">
+            BY
+            <Link target="_blank" href={"https://noor-hesham-boi.io"}>
+              Noor Hesham
+            </Link>{" "}
+            @2025 All Rights Reserved.
+          </p>
+          {/* <div className="flex gap-2">
             <Image src="/visa.svg" alt="Visa" width={40} height={25} />
             <Image src="/mastercard.svg" alt="Mastercard" width={40} height={25} />
             <Image src="/paypal.svg" alt="PayPal" width={40} height={25} />
             <Image src="/skrill.svg" alt="Skrill" width={40} height={25} />
             <Image src="/neteller.svg" alt="Neteller" width={40} height={25} />
             <Image src="/google-pay.svg" alt="Google Pay" width={40} height={25} />
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
