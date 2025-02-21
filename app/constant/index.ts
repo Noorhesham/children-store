@@ -1,12 +1,12 @@
-import product from "@/app/models/Product";
-import order from "@/app/models/Order";
-import category from "../models/Category.ts";
+import Product from "@/app/models/Product";
+import Order from "@/app/models/Order";
+import Category from "../models/Category";
 export type ModelProps = "product" | "order" | "category";
 
 const models: Record<ModelProps, any> = {
-  product,
-  order,
-  category,
+  Product,
+  Order,
+  Category,
 };
 export type CascadeDeleteFunction = (id: string) => Promise<void>;
 
