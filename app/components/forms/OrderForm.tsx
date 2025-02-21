@@ -77,8 +77,8 @@ export function OrderForm({ defaultValues }: { defaultValues?: any }) {
     };
 
     const res = defaultValues
-      ? await updateEntity("order", defaultValues._id, orderData)
-      : await createEntity("order", orderData);
+      ? await updateEntity("Order", defaultValues._id, orderData)
+      : await createEntity("Order", orderData);
 
     if (res.success) {
       !defaultValues && clearCart();
