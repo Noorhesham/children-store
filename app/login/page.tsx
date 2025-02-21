@@ -1,7 +1,9 @@
 import React from "react";
 import LoginPage from "../components/forms/LoginForm";
+import connect from "../utils/clientPromise";
 
-const page = () => {
+const page = async () => {
+  await connect();
   return (
     <div>
       <LoginPage />
