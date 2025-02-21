@@ -12,11 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 const ModelCustom = ({
-  value,
-  className,
   text,
   onClick,
-  create,
   title,
   btn,
   content,
@@ -24,10 +21,10 @@ const ModelCustom = ({
 }: {
   value?: any;
   className?: string;
-  text: string;
+  text?: string;
   onClick?: any;
   create?: boolean;
-  title: string;
+  title?: string;
   btn?: ReactNode;
   content: ReactNode;
   isOpen?: boolean;
@@ -42,21 +39,6 @@ const ModelCustom = ({
           <DialogDescription>{text}</DialogDescription>
         </DialogHeader>
         {content}
-        <DialogFooter className="self-end flex items-center gap-3">
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            variant="default"
-            onClick={() => {
-              onClick && onClick();
-              setOpen(false);
-            }}
-          >
-            Add Info
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

@@ -47,13 +47,15 @@ export default function DynamicForm({
     defaultValues,
   });
   console.log(form.formState.errors);
+  const isUploading = form.watch("isUploading");
 
   async function handleFormSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsSubmitting(true);
       setError(null);
-      await onSubmit(values);
-
+      const res = await onSubmit(values);
+      console.log(values);
+      if (res.error) throw new Error(res.error);
       toast({
         title: "Success",
         description: "Operation completed successfully",
@@ -153,7 +155,7 @@ export default function DynamicForm({
         })}
         {children && children(form.control, form.getValues)}{" "}
         {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
+        <Button type="submit" className="w-full" disabled={isSubmitting || isUploading}>
           {isSubmitting ? "Processing..." : submitButtonText}
         </Button>
       </form>

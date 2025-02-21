@@ -1,83 +1,108 @@
-// components/forms/ProductForm.tsx
-"use client";
+  // components/forms/ProductForm.tsx
+  "use client";
 
-import { z } from "zod";
-import DynamicForm from "./DynamicForm";
-import { IFormField } from "@/app/types";
+  import { z } from "zod";
+  import DynamicForm from "./DynamicForm";
+  import { IFormField } from "@/app/types";
+  import { createEntity, updateEntity } from "@/app/actions/actions";
+  import { useGetEntity } from "@/app/queries";
 
-const productValidation = {
-  title: z.string().min(1, "Title is required"),
-  description: z.string().min(1, "Description is required"),
-  price: z.number().min(0, "Price must be positive"),
-  stock: z.number().min(0, "Stock must be positive"),
-  category: z.string().min(1, "Category is required"),
-  images: z
-    .array(
-      z.object({
-        secure_url: z.string(),
-        public_id: z.string(),
-      })
-    )
-    .nonempty("At least one image is required"),
-};
+  const productValidation = {
+    title: z.string().min(1, "مطلوب إدخال العنوان"),
+    description: z.string().min(1, "مطلوب إدخال الوصف"),
+    price: z.union([z.string(), z.number().min(1, "مطلوب إدخال السعر")]),
+    stock: z.union([z.string(), z.number().min(1, "مطلوب إدخال الكمية")]),
+    category: z.string().min(1, "مطلوب اختيار الفئة"),
+    images: z
+      .array(
+        z.object({
+          secure_url: z.string(),
+        })
+      )
+      .nonempty("مطلوب إضافة صورة واحدة على الأقل"),
+  };
 
-const productFields: IFormField[] = [
-  {
-    name: "title",
-    label: "Product Title",
-    type: "text",
-    validation: productValidation.title,
-    placeholder: "Enter product title",
-    component: "input",
-  },
-  {
-    name: "description",
-    label: "Description",
-    component: "textarea",
-    validation: productValidation.description,
-    placeholder: "Enter product description",
-  },
-  {
-    name: "price",
-    label: "Price",
-    type: "number",
-    validation: productValidation.price,
-    placeholder: "Enter price",
-    props: { step: "0.01" },
-    component: "input",
-  },
-  {
-    name: "stock",
-    label: "Stock Quantity",
-    type: "number",
-    validation: productValidation.stock,
-    placeholder: "Enter stock quantity",
-    component: "input",
-  },
-  {
-    name: "category",
-    label: "Category",
-    component: "select",
-    validation: productValidation.category,
-    options: [], // Will be populated dynamically
-    placeholder: "Select category",
-  },
-  {
-    name: "images",
-    label: "Product Images",
-    component: "photo",
-    validation: productValidation.images,
-  },
-];
+  export function ProductForm({ defaultValues }: { defaultValues?: any }) {
+    const { data: categories, isLoading } = useGetEntity({
+      entityName: "category",
+      key: "category",
+    });
 
-export function ProductForm({ defaultValues }: { defaultValues?: any }) {
-  const onSubmit = async (values: any) => {};
-  return (
-    <DynamicForm
-      fields={productFields}
-      onSubmit={onSubmit}
-      defaultValues={defaultValues}
-      submitButtonText="Save Product"
-    />
-  );
-}
+    // إصلاح مشكلة التحديد التلقائي
+    const processedDefaults = defaultValues
+      ? {
+          ...defaultValues,
+          category: defaultValues.category?._id || defaultValues.category,
+        }
+      : undefined;
+
+    const onSubmit = async (values: any) => {
+      const res = defaultValues
+        ? await updateEntity("product", defaultValues._id, values)
+        : await createEntity("product", values);
+      return res;
+    };
+
+    const productFields: IFormField[] = [
+      {
+        name: "title",
+        label: "عنوان المنتج",
+        type: "text",
+        validation: productValidation.title,
+        placeholder: "أدخل عنوان المنتج",
+        component: "input",
+      },
+      {
+        name: "description",
+        label: "الوصف",
+        component: "textarea",
+        validation: productValidation.description,
+        placeholder: "أدخل وصف المنتج",
+      },
+      {
+        name: "price",
+        label: "السعر",
+        type: "number",
+        validation: productValidation.price,
+        placeholder: "أدخل السعر",
+        props: { step: "0.01" },
+        component: "input",
+      },
+      {
+        name: "stock",
+        label: "الكمية المتاحة",
+        type: "number",
+        validation: productValidation.stock,
+        placeholder: "أدخل الكمية",
+        component: "input",
+      },
+      {
+        name: "category",
+        label: "الفئة",
+        component: "select",
+        validation: productValidation.category,
+        options: isLoading
+          ? []
+          : categories?.data?.data.map((p: any) => ({
+              value: p._id.toString(), // تحويل ObjectId إلى string
+              name: p.name,
+            })) || [],
+        placeholder: "اختر الفئة",
+      },
+      {
+        name: "images",
+        label: "صور المنتج",
+        component: "photo",
+        validation: productValidation.images,
+      },
+    ];
+
+    return (
+      <DynamicForm
+        fields={productFields}
+        onSubmit={onSubmit}
+        defaultValues={processedDefaults} //الجة استخدام القيم المع
+        submitButtonText="حفظ المنتج"
+      />
+    );
+  }

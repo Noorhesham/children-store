@@ -1,43 +1,70 @@
-"use client";
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { Heart, Share2 } from "lucide-react";
 import ImageSlider from "./ImageSlider";
-import { ProductLoader } from "./ProductReel";
-import { IProduct } from "@/types";
-const ProductCard = ({ product, index }: { product: IProduct; index: number }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, index * 75);
-    return () => clearTimeout(timer);
-  }, [index]);
-  return isVisible ? (
+import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
+import { IProduct } from "../types";
+
+export default function ProductCard({ product }: { product: IProduct }) {
+  const salePrice = product.price - product.sale || 0;
+  const { toast } = useToast();
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const url = `${window.location.origin}/product/${product._id}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: product.title,
+          text: `Check out ${product.title} on Muslim Kids`,
+          url,
+        });
+      } catch (err) {
+        await navigator.clipboard.writeText(url);
+        toast({
+          title: "تم نسخ الرابط",
+          description: "تم نسخ رابط المنتج إلى الحافظة",
+        });
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast({
+        title: "تم نسخ الرابط",
+        description: "تم نسخ رابط المنتج إلى الحافظة",
+      });
+    }
+  };
+  return (
     <Link
-      className={`${cn(" opacity-0  h-full relative w-full cursor-pointer group-main ", {
-        " opacity-100 animate-in duration-200 fade-in-5 shadow-sm rounded-xl": isVisible,
-      })} self-stretch flex flex-col `}
       href={`/product/${product._id}`}
+      className="group block  relative border-2 border-dashed border-gray-900 rounded-3xl p-4 transition-all hover:border-[#6B4EFF]"
     >
-      <ImageSlider
-        stock={product.inventory}
-        productId={product._id}
-        urls={product.images.map((image) => image.secure_url)}
-      />
-      <div className=" flex flex-col self-stretch justify-between py-1 px-2 w-full">
-        <h3 className=" mt-4 font-medium text-sm text-gray-700 ">
-          {product.name.length > 20 ? product.name.substring(0, 20) + "..." : product.name}
-        </h3>
-        <div className=" mt-auto">
-          <p className=" mt-1 text-sm text-gray-500">{product.category.name}</p>
-          <p className=" mt-1 font-medium text-sm text-gray-900">{product.basePrice}</p>
+      {" "}
+      {salePrice > 0 && (
+        <div className="absolute top-4 left-[-30px] bg-red-500 text-white font-bold px-3 py-1 transform -rotate-45 shadow-lg">
+          تخفيض
+        </div>
+      )}
+      <div className="absolute z-50 top-6 right-6 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50">
+          <Heart className="w-4 h-4 text-gray-600" />
+        </button> */}
+        <button
+          onClick={handleShare}
+          className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50"
+        >
+          <Share2 className="w-4 h-4 text-gray-600" />
+        </button>
+      </div>
+      <ImageSlider urls={product.images.map((image) => image.secure_url)} />
+      <div className="space-y-2">
+        <div className="text-sm text-gray-500 uppercase">{product.category.name}</div>
+        <h3 className="font-semibold truncate">{product.title}</h3>
+        <div className="flex items-center gap-2">
+          {salePrice > 0 && <span className="text-gray-400 line-through">${product.price.toFixed(2)}</span>}
+          <span className="text-[#6B4EFF] font-semibold">{product.price.toFixed(2)}</span>
         </div>
       </div>
     </Link>
-  ) : (
-    <ProductLoader />
   );
-};
-
-export default ProductCard;
+}

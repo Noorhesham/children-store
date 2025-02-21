@@ -28,5 +28,35 @@ const orderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+orderSchema.pre("save", async function (next) {
+  const order = this;
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
+  try {
+    for (const item of order.items) {
+      const product = await mongoose.model("Product").findById(item.product);
+      if (!product) {
+        throw new Error(`Product ${item.product} not found`);
+      }
+
+      if (product.stock < item.quantity) {
+        throw new Error(`Insufficient stock for product ${product.title}`);
+      }
+
+      product.stock -= item.quantity;
+      await product.save({ session });
+    }
+
+    await session.commitTransaction();
+    next();
+  } catch (error) {
+    await session.abortTransaction();
+
+    //@ts-ignore
+    next(error);
+  } finally {
+    session.endSession();
+  }
+});
 export default mongoose.models.Order || mongoose.model("Order", orderSchema);

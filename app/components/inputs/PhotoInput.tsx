@@ -26,11 +26,11 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
     async (files: FileList) => {
       try {
         setIsUploading(true);
-        console.log(files);
+        setValue("isUploading", true); // إضافة حالة التحميل للنموذج
+
         const uploadPromises = Array.from(files).map((file) => uploadImageToImageKit(file));
 
         const results = await Promise.all(uploadPromises);
-        console.log(results);
         const newImages = results.map((res) => ({
           secure_url: res.url,
           publicId: res.fileId,
@@ -41,6 +41,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
         console.error("Upload failed:", error);
       } finally {
         setIsUploading(false);
+        setValue("isUploading", false); // إعادة تعيين حالة التحميل
       }
     },
     [currentImages, name, setValue]
@@ -66,7 +67,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
 
       <div className="grid grid-cols-3 gap-4">
         {currentImages.map((image: ImageType, index: number) => (
-          <div key={image.publicId} className="relative w-full h-44 group">
+          <div key={index} className="relative w-full h-44 group">
             <Image
               src={image.secure_url}
               alt={`Upload ${index + 1}`}
@@ -79,6 +80,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
               size="sm"
               className="absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={() => handleDelete(image.publicId)}
+              disabled={isUploading} // تعطيل الزر أثناء التحميل
             >
               <Trash className="h-4 w-4" />
             </Button>
@@ -86,7 +88,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
         ))}
       </div>
 
-      {isUploading && <p className="text-sm text-muted-foreground">Uploading images...</p>}
+      {isUploading && <p className="text-sm text-muted-foreground">جاري تحميل الصور...</p>}
     </div>
   );
 };

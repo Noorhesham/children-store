@@ -116,76 +116,64 @@ export const deleteEntity = async (modelName: ModelProps, id: string) => {
 };
 
 export const getEntities = async (
-  modelName: ModelProps,
-  page = 1,
-  filter: Record<string, any> = {},
-  all = false,
-  populate = "",
-  searchField = "",
-  searchTerm = "",
-  sort: Record<string, 1 | -1> = {},
-  filterArray: Record<string, any[]> = {},
-  limit = 10
+  modelName: string,
+  options: {
+    page: number;
+    category?: string | null;
+    locale?: string;
+    search?: string;
+    populateFields?: string[];
+    limitCustom?: number;
+  } = { page: 1 }
 ) => {
   try {
     await connect();
-    const Model = getModel(modelName);
-    const skip = (page - 1) * limit;
-    // Prepare query filters
 
-    const validFilter = Object.fromEntries(
-      Object.entries(filter).filter(([key, value]) => value && mongoose.isValidObjectId(value))
-    );
-    const query: Record<string, any> = {};
-    Object.entries(filter).forEach(([key, value]) => {
-      if (key === "startDate" && value) {
-        // Handle startDate as a date filter
-        const date = new Date(value); // Convert string to Date
-        query[key] = { $gte: date }; // Use $gte to filter by start date
-      } else if (Array.isArray(value) && value.length > 0) {
-        // If value is an array, use $in operator
-        query[key] = { $in: value };
-      } else if (value && mongoose.isValidObjectId(value)) {
-        // If value is a valid ObjectId, add it as-is
-        query[key] = value;
-      } else if (value) {
-        query[key] = value;
-      }
+    const Model = getModel(modelName);
+    const page = options.page;
+    const limit = options.limitCustom || 10; // adjust your limit per page as needed
+    const skip = (page - 1) * limit;
+
+    // Build query filter.
+    const queryObj: Record<string, any> = {};
+
+    // If a category is provided, filter by it.
+    if (options.category) {
+      queryObj["category.name"] = options.category;
+    }
+
+    // If a search term is provided, add regex filters for title and description.
+    if (options.search) {
+      queryObj["$or"] = [
+        { title: { $regex: options.search, $options: "i" } },
+        { description: { $regex: options.search, $options: "i" } },
+      ];
+    }
+
+    // Build the query with pagination
+    let query = Model.find(queryObj).skip(skip).limit(limit);
+
+    options.populateFields?.forEach((field) => {
+      query = query.populate(field);
     });
 
-    console.log(query, filter, "meow");
-
-    if (searchField && searchTerm) {
-      query[searchField] = { $regex: searchTerm, $options: "i" };
+    const entities = await query.lean();
+    if (!entities || entities.length === 0) {
+      return { error: `${modelName} not found` };
     }
 
-    let queryBuilder = Model.find(query).skip(skip).limit(limit).sort(sort); // Apply sorting
+    // Count total documents to determine if there are more pages
+    const totalCount = await Model.countDocuments(queryObj);
+    const hasMore = skip + entities.length < totalCount;
 
-    // Handle "all" flag to fetch all data
-    if (all) {
-      queryBuilder = Model.find(query).sort(sort);
-    }
-
-    // Apply population if specified
-    if (populate) {
-      queryBuilder = queryBuilder.populate({
-        path: populate,
-      });
-    }
-
-    // Execute query
-    const entities = await queryBuilder.exec();
-
-    // Calculate total pages based on limit
-    const totalPages = Math.ceil((await Model.countDocuments(query)) / limit);
-    const data = JSON.parse(JSON.stringify(entities));
-
+    // Localize fields if needed
+    console.log(entities);
     return {
       success: `${modelName} fetched successfully`,
-      data: { data, totalPages },
+      products: JSON.parse(JSON.stringify(entities)),
+      hasMore,
     };
   } catch (error) {
-    console.log(error);
     return { error: `Error fetching ${modelName}`, details: error };
   }
 };
@@ -204,17 +192,7 @@ export const getEntity = async (modelName: ModelProps, id: string, locale: strin
 
     const entity = await query.lean();
 
-    if (!entity) {
-      return { error: `${modelName} not found` };
-    }
-
-    const localizedEntity = {
-      ...entity,
-      name: entity.name ? entity.name[locale] || entity.name.en : undefined,
-      description: entity.description ? entity.description[locale] || entity.description.en : undefined,
-    };
-
-    return { success: `${modelName} fetched successfully`, data: locale ? localizedEntity : entity };
+    return { success: `${modelName} fetched successfully`, data: JSON.parse(JSON.stringify(entity)) };
   } catch (error) {
     return { error: `Error fetching ${modelName}`, details: error };
   }

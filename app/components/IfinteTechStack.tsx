@@ -3,7 +3,15 @@ import gsap from "gsap";
 import Image from "next/image";
 import React, { ReactNode, useEffect, useRef } from "react";
 
-const InfiniteMoveSection = ({ list, className, height }: { list: string[]; className?: string; height?: string }) => {
+const InfiniteMoveSection = ({
+  list,
+  className,
+  height,
+}: {
+  list: { img: string; text: string }[];
+  className?: string;
+  height?: string;
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const firstTextRef = useRef<HTMLDivElement>(null);
   const secondTextRef = useRef<HTMLDivElement>(null);
@@ -33,25 +41,29 @@ const InfiniteMoveSection = ({ list, className, height }: { list: string[]; clas
     <div ref={containerRef} className={`${className || ""} ${height || "h-20"} relative w-full overflow-hidden`}>
       <div ref={firstTextRef} className="absolute gap-3 whitespace-nowrap flex">
         {list.map((t, i) => (
-          <div
-            key={i}
-            className={`p-2 rounded-lg w-20  ${
-              height || "h-20"
-            } aspect-square relative flex gap-3 items-center justify-center`}
-          >
-            <Image priority={i < 3} src={t} alt="" fill className="object-contain" />
+          <div className="flex items-center gap-4" key={i}>
+            <div
+              className={`p-2 rounded-lg w-20  ${
+                height || "h-20"
+              } aspect-square relative flex gap-3 items-center justify-center`}
+            >
+              <Image priority={i < 3} src={t.img} alt="" fill className="object-contain" />
+            </div>
+            <h3 className=" text-base font-semibold">{t.text}</h3>
           </div>
         ))}
       </div>
       <div ref={secondTextRef} className="absolute whitespace-nowrap flex gap-3">
         {list.map((t, i) => (
-          <div
-            key={i}
-            className={`p-2 rounded-lg  w-20 ${
-              height || "h-20"
-            }  aspect-square relative flex  items-center justify-center`}
-          >
-            <Image priority={i < 3} src={t} alt="" fill className="object-contain" />
+          <div className="flex items-center gap-4" key={i}>
+            <div
+              className={`p-2 rounded-lg w-20  ${
+                height || "h-20"
+              } aspect-square relative flex gap-3 items-center justify-center`}
+            >
+              <Image priority={i < 3} src={t.img} alt="" fill className="object-contain" />
+            </div>
+            <h3 className=" text-base font-semibold">{t.text}</h3>
           </div>
         ))}
       </div>

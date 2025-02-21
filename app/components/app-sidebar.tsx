@@ -21,24 +21,24 @@ const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
-      title: "Building Your Application",
+      title: "ادارة التطبيق",
       url: "/dashboard",
       items: [
         {
-          title: "Products",
-          url: "/dashboard/products",
+          title: "المنتجات",
+          url: "/dashboard",
         },
         {
-          title: "orders",
+          title: "الطلبات",
           url: "/dashboard/orders",
         },
         {
-          title: "Create Product",
-          url: "/dashboard/createproduct",
+          title: "التصنيفات",
+          url: "/dashboard/categories",
         },
         {
-          title: "Global Variants",
-          url: "/dashboard/variants",
+          title: "العودة للتطبيق الاساسي",
+          url: "/",
         },
       ],
     },
@@ -49,10 +49,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
-        <VersionSwitcher versions={data.versions} defaultVersion={data.versions[0]} />
-        <SearchForm />
-      </SidebarHeader>
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (

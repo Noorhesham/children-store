@@ -7,18 +7,27 @@ export interface IProduct {
   description: string;
   price: number;
   stock: number;
-  category: string;
+  category: {
+    name: string;
+    image: {
+      secure_url: string;
+    };
+  };
   images: {
     secure_url: string;
     public_id: string;
   }[];
   createdAt: Date;
   updatedAt: Date;
+  sale: number;
 }
 
 export interface ICategory {
   _id: string;
   name: string;
+  image: {
+    secure_url: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -43,7 +52,7 @@ export type IFormField = {
 };
 export interface DynamicFormProps {
   fields: IFormField[];
-  onSubmit: (values: any) => Promise<void>;
+  onSubmit: any;
   defaultValues?: Record<string, any>;
   submitButtonText?: string;
   className?: string;

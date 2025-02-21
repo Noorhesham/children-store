@@ -7,6 +7,7 @@ import MaxWidthWrapper from "./defaults/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import HeroButton from "./ButtonHero";
+import { CartSheet } from "./CartSheet";
 
 const NavBar = () => {
   return (
@@ -20,9 +21,7 @@ const NavBar = () => {
               </div>
 
               <div className=" flex items-center gap-5">
-                <Button>
-                  <ShoppingCart />
-                </Button>
+                <CartSheet />
                 <HeroButton className=" text-sm">الكاتلوج</HeroButton>
               </div>
             </div>
