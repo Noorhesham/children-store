@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Nav1 from "../components/Nav1";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +19,10 @@ export default function RootLayout({
     <main>
       <Nav1 />
       <NavBar />
-      <div className="">{children}</div> <Toaster />
+      <Suspense>
+        <div>{children}</div>
+      </Suspense>{" "}
+      <Toaster />
       <Footer />
     </main>
   );
