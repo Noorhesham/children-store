@@ -1,12 +1,10 @@
 "use server";
-import mongoose, { model } from "mongoose";
-import User from "../models/User";
+import Category from "../models/Category";
 
 import bcrypt from "bcryptjs";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
 import { CascadeDeleteFunction, ModelProps } from "../constant";
-import Category from "../models/Category";
 import Order from "../models/Order";
 import Product from "../models/Product";
 import connect from "../utils/clientPromise";

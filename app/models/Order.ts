@@ -59,4 +59,6 @@ orderSchema.pre("save", async function (next) {
     session.endSession();
   }
 });
-export default mongoose.models.Order || mongoose.model("Order", orderSchema);
+const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
+
+export default Order;

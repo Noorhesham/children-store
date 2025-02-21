@@ -5,14 +5,11 @@ import ImageSlider from "@/app/components/ImageSlider";
 import { AddToCart } from "@/app/components/AddToCart";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import ProductsAnimation from "@/app/components/ProductsAnimation";
-import Product from "@/app/models/Product";
+import product from "@/app/models/Product";
 import { PriceDisplay } from "@/app/components/PriceDisplay";
-import connect from "@/app/utils/clientPromise";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  await connect();
-
-  const productData = await getEntity("product", params.id);
+  const productData = await getEntity("Product", params.id);
 
   if (!productData?.data) {
     return {
@@ -31,16 +28,15 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
-  await connect();
-
-  const productData = await getEntity("product", params.id, "en", ["category"]);
+  const productData = await getEntity("Product", params.id, "en", ["category"]);
   if (!productData?.data) {
     notFound();
   }
   const category = productData.data.category._id;
 
   // Exclude the current product from similar products
-  const similarProducts = await Product.find({ category, _id: { $ne: productData.data._id } })
+  const similarProducts = await product
+    .find({ category, _id: { $ne: productData.data._id } })
     .limit(4)
     .lean();
 
