@@ -56,7 +56,7 @@ const ExploreSection = () => {
     >
       <MaxWidthWrapper className="  !pt-32  relative flex justify-center items-center ">
         <div className="flex flex-col gap-4 justify-center items-center">
-          <div className="flex flex-col font-extrabold  relative z-10 text-center text-white text-7xl items-start">
+          <div className="flex flex-col font-extrabold  relative z-10 text-center text-white text-3xl lg:text-7xl items-start">
             <h1 className=" ">اكتشف عالم مسلم كيدز الملئ</h1>{" "}
             <div className="flex mt-8  items-center gap-4">
               بالتعلم <FollowingEyes />و المرح !

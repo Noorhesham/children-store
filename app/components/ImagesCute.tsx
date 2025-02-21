@@ -37,10 +37,16 @@ const ImagesCute = ({ imgs }: { imgs?: string[] }) => {
 
   return (
     <div>
-      <div ref={leftImageRef} className="absolute z-10 -left-20 top-0 w-64 h-64">
+      <div
+        ref={leftImageRef}
+        className="absolute z-10 left-4 lg:block hidden lg:-left-20 top-0 w-40 h-40 lg:w-64  lg:h-64"
+      >
         <Image src={imgs?.[0] || "/monkey.png"} alt="Decorative" className="object-contain object-top" fill />
       </div>
-      <div ref={rightImageRef} className="absolute -right-20 top-0 w-64 h-64">
+      <div
+        ref={rightImageRef}
+        className="absolute right-4 lg:block hidden lg:-right-20 top-0  lg:w-64 w-40 h-40 lg:h-64"
+      >
         <Image src={imgs?.[1] || "/tiger.png"} alt="Decorative" className="object-contain object-top" fill />
       </div>
     </div>

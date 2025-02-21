@@ -77,7 +77,7 @@ const Filters1 = ({ categories }: Filters1Props) => {
             className="filters-swiper"
           >
             {allCategories.map((category) => (
-              <SwiperSlide key={category._id || "all"}>{renderCategoryButton(category)}</SwiperSlide>
+              <SwiperSlide className=" text-nowrap" key={category._id || "all"}>{renderCategoryButton(category)}</SwiperSlide>
             ))}
           </Swiper>
         </div>

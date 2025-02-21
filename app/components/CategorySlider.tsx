@@ -31,7 +31,20 @@ export default function CategorySlider({ categories }: CategorySliderProps) {
       <Swiper
         modules={[Autoplay, Navigation]}
         spaceBetween={0}
-        slidesPerView={6}
+        breakpoints={{
+          1024: {
+            slidesPerView: 6,
+          },
+          768: {
+            slidesPerView: 4,
+          },
+          640: {
+            slidesPerView: 2,
+          },
+          420: {
+            slidesPerView: 2,
+          },
+        }}
         loop={true}
         autoplay={{
           delay: 2000,

@@ -11,11 +11,11 @@ const HeroSection = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      className=" h-[82vh]"
+      className="  lg:h-[82vh]"
     >
-      <MaxWidthWrapper className=" flex items-center  justify-between">
+      <MaxWidthWrapper className=" flex items-center  lg:flex-row flex-col justify-between">
         <div className="flex flex-col gap-4">
-          <h1 className=" text-7xl font-extrabold text-white">أجعل حياة طفلك لامعة معنا </h1>
+          <h1 className=" text-4xl lg:text-7xl font-extrabold text-white">أجعل حياة طفلك لامعة معنا </h1>
           <p className=" text-base text-gray-100">
             هنا يمكنك التسوق و رؤية افضل العاب الاطفال وتعليمه بطريقه صحيحه واسلامية وممتعة
           </p>
@@ -23,8 +23,8 @@ const HeroSection = () => {
             الان
           </HeroButton>
         </div>
-        <div className=" h-96  block w-[50%] relative">
-          <AnimatedImage className=" w-full absolute inset-0 h-full" data="animate1.json" />
+        <div className=" h-96  block w-full lg:w-[50%] relative">
+          <AnimatedImage className=" w-full lg:w-full lg:h-full absolute inset-0 h-full" data="animate1.json" />
         </div>
       </MaxWidthWrapper>
     </div>
