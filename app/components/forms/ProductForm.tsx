@@ -3,9 +3,9 @@
 
 import { z } from "zod";
 import DynamicForm from "./DynamicForm";
-import { IFormField } from "@/types";
-import { createEntity, updateEntity } from "@/actions/actions";
-import { useGetEntity } from "@/queries";
+import { useGetEntity } from "@/app/queries";
+import { createEntity, updateEntity } from "@/app/actions/actions";
+import { IFormField } from "@/app/types";
 
 const productValidation = {
   title: z.string().min(1, "مطلوب إدخال العنوان"),

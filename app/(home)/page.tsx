@@ -3,13 +3,13 @@ import HeroSection from "../components/HeroSection";
 import InfiniteMoveSection from "../components/IfinteTechStack";
 import CategorySlider from "../components/CategorySlider";
 import ProductGrid from "../components/ProductGrid";
-import category from "../models/Category.ts";
 import FeaturedProducts from "../components/Featured";
 import connect from "../utils/clientPromise";
 import StoreBenefits from "../components/Benefits";
 import NewArrivals from "../components/NewArrivals";
-import product from "../models/Product";
+import Product from "../models/Product";
 import ExploreSection from "../components/ExploreSection";
+import Category from "../models/Category";
 
 interface PageProps {
   searchParams: { category?: string; page?: string };
@@ -17,12 +17,12 @@ interface PageProps {
 
 export default async function Home({ searchParams }: PageProps) {
   await connect();
-  const categories = await category.find({}).lean();
+  const categories = await Category.find({}).lean();
   const categoriesObj = JSON.parse(JSON.stringify(categories));
   const page = searchParams.page || 1;
   const limit = 8;
   const query = searchParams.category ? { category: searchParams.category } : {};
-  const productsAboutTOFinish = await product.find({}).limit(4).sort({ stock: 1 }).lean();
+  const productsAboutTOFinish = await Product.find({}).limit(4).sort({ stock: 1 }).lean();
 
   return (
     <section className="">

@@ -6,9 +6,9 @@ import bcrypt from "bcryptjs";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { v2 as cloudinary } from "cloudinary";
 import { CascadeDeleteFunction, ModelProps } from "../constant";
-import category from "../models/Category";
-import order from "../models/Order";
-import product from "../models/Product";
+import Category from "../models/Category";
+import Order from "../models/Order";
+import Product from "../models/Product";
 import connect from "../utils/clientPromise";
 
 cloudinary.config({
@@ -19,9 +19,9 @@ cloudinary.config({
 
 const getModel = (modelName: ModelProps) => {
   const models: Record<ModelProps, any> = {
-    category: category,
-    order: order,
-    product: product,
+    Category: Category,
+    Order: Order,
+    Product: Product,
   };
   return models[modelName];
 };
