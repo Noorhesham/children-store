@@ -3,7 +3,7 @@ import { DataTable } from "@/app/components/DataTable";
 
 import connect from "@/app/utils/clientPromise";
 import { deleteEntity } from "@/app/actions/actions";
-import order from "@/app/models/Order";
+import Order from "@/app/models/Order";
 import { orderColumns } from "./columns";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 const Page = async () => {
   await connect();
 
-  const data = await order.find({}).lean();
+  const data = await Order.find({}).lean();
   const dataObj = JSON.parse(JSON.stringify(data));
   return (
     <MaxWidthWrapper className="flex px-4 flex-col mt-5">

@@ -3,7 +3,7 @@ import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import { DataTable } from "@/app/components/DataTable";
 
 import connect from "../utils/clientPromise";
-import product from "../models/Product";
+import Product from "../models/Product";
 import { deleteEntity } from "../actions/actions";
 import { productColumns } from "./products/columns";
 import ModelCustom from "../components/ModelCustom";
@@ -17,14 +17,13 @@ const Page = async ({ searchParams }: { searchParams: { page?: string } }) => {
   const currentPage = parseInt(searchParams.page || "1", 10);
   const limit = 10;
 
-  const data = await product
-    .find({})
+  const data = await Product.find({})
     .limit(limit)
     .skip((currentPage - 1) * limit)
     .populate("category")
     .lean();
   const dataObj = JSON.parse(JSON.stringify(data));
-  const totalCount = (await product.countDocuments({}).lean()) as number;
+  const totalCount = (await Product.countDocuments({}).lean()) as number;
   const totalPages = Math.ceil(totalCount / limit);
   console.log(data);
   return (
