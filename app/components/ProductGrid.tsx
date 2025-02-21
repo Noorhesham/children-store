@@ -8,6 +8,7 @@ import Empty from "./Empty";
 import MaxWidthWrapper from "./defaults/MaxWidthWrapper";
 import ImagesCute from "./ImagesCute";
 import ProductsAnimation from "./ProductsAnimation";
+import { Suspense } from "react";
 
 interface ProductGridProps {
   categories: ICategory[];
@@ -33,7 +34,9 @@ export default async function ProductGrid({ categories, query, page, limit }: Pr
           <div className="text-center mb-6">
             <h2 className="text-4xl font-bold">تصفح منتجتنا</h2>
           </div>
-          <Filters1 categories={categories} />
+          <Suspense>
+            <Filters1 categories={categories} />
+          </Suspense>
         </MaxWidthWrapper>
       </div>
 
