@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import HeroButton from "./ButtonHero";
 import { CartSheet } from "./CartSheet";
+import Link from "next/link";
 
 const NavBar = () => {
   return (
@@ -22,7 +23,9 @@ const NavBar = () => {
 
               <div className=" flex items-center gap-5">
                 <CartSheet />
-                <HeroButton className=" text-sm">الكاتلوج</HeroButton>
+                <Link href={"/products"}>
+                  <HeroButton className=" text-sm">الكاتلوج</HeroButton>
+                </Link>
               </div>
             </div>
           </div>
