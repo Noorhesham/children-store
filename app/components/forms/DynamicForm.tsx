@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 import { z, ZodTypeAny } from "zod";
 import { Form, FormField, FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
 import FormSelect from "../inputs/FormSelect";
 import FormInput from "../inputs/FormInput";
 import { PhotoInput } from "../inputs/PhotoInput";
-import { DynamicFormProps } from "@/app/types";
+import { useToast } from "../../../hooks/use-toast";
+import { DynamicFormProps } from "@/types";
 
 export default function DynamicForm({
   fields,
