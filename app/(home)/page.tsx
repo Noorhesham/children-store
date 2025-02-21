@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: PageProps) {
       <CategorySlider categories={categoriesObj} />
 
       <div className=" mx-auto px-4 py-16">
-        <div className="relative  ">
+        <div id="products" className="relative  ">
           <Suspense fallback={<div>Loading...</div>}>
             <ProductGrid page={page} limit={limit} query={query} categories={categoriesObj} />
           </Suspense>
