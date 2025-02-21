@@ -31,7 +31,6 @@ const loginFormFields: IFormField[] = [
 ];
 
 export default function LoginPage() {
-  const { toast } = useToast();
   const router = useRouter();
   const handleLogin = async (data: any) => {
     const res = await signIn("credentials", {
@@ -41,9 +40,6 @@ export default function LoginPage() {
     });
     console.log(res);
     if (res?.ok) return router.push("/dashboard");
-    if (res?.error) {
-      throw new Error(res?.error);
-    }
   };
 
   return (
