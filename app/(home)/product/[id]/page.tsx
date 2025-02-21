@@ -5,7 +5,7 @@ import ImageSlider from "@/app/components/ImageSlider";
 import { AddToCart } from "@/app/components/AddToCart";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import ProductsAnimation from "@/app/components/ProductsAnimation";
-import product from "@/app/models/product";
+import product from "@/app/models/Product";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const productData = await getEntity("product", params.id);

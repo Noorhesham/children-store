@@ -1,6 +1,6 @@
 import { PaginationDemo } from "./Pagination";
 import Filters1 from "./Filters1";
-import product from "../models/product";
+import product from "../models/Product";
 import { ICategory } from "../types";
 import HeroButton from "./ButtonHero";
 import Link from "next/link";

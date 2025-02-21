@@ -1,6 +1,6 @@
-import product from "@/app/models/product";
-import order from "@/app/models/order";
-import category from "../models/category";
+import product from "@/app/models/Product";
+import order from "@/app/models/Order";
+import category from "../models/Category";
 export type ModelProps = "product" | "order" | "category";
 
 const models: Record<ModelProps, any> = {

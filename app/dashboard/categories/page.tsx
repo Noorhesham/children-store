@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import { DataTable } from "@/app/components/DataTable";
 
-import category from "@/app/models/category";
+import category from "@/app/models/Category";
 import connect from "@/app/utils/clientPromise";
 import ModelCustom from "@/app/components/ModelCustom";
 import { deleteEntity } from "@/app/actions/actions";

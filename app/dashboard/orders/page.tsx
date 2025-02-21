@@ -3,7 +3,7 @@ import { DataTable } from "@/app/components/DataTable";
 
 import connect from "@/app/utils/clientPromise";
 import { deleteEntity } from "@/app/actions/actions";
-import order from "@/app/models/order";
+import order from "@/app/models/Order";
 import { orderColumns } from "./columns";
 
 export const dynamic = "force-dynamic";

@@ -3,7 +3,7 @@ import MaxWidthWrapper from "@/app/components/defaults/MaxWidthWrapper";
 import { DataTable } from "@/app/components/DataTable";
 
 import connect from "../utils/clientPromise";
-import product from "../models/product";
+import product from "../models/Product";
 import { deleteEntity } from "../actions/actions";
 import { productColumns } from "./products/columns";
 import ModelCustom from "../components/ModelCustom";

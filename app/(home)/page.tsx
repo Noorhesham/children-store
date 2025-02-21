@@ -4,12 +4,12 @@ import HeroSection from "../components/HeroSection";
 import InfiniteMoveSection from "../components/IfinteTechStack";
 import CategorySlider from "../components/CategorySlider";
 import ProductGrid from "../components/ProductGrid";
-import category from "../models/category";
+import category from "../models/Category";
 import FeaturedProducts from "../components/Featured";
 import connect from "../utils/clientPromise";
 import StoreBenefits from "../components/Benefits";
 import NewArrivals from "../components/NewArrivals";
-import product from "../models/product";
+import product from "../models/Product";
 import ExploreSection from "../components/ExploreSection";
 
 interface PageProps {
