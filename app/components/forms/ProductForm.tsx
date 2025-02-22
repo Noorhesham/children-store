@@ -11,6 +11,7 @@ const productValidation = {
   title: z.string().min(1, "مطلوب إدخال العنوان"),
   description: z.string().min(1, "مطلوب إدخال الوصف"),
   price: z.union([z.string(), z.number().min(1, "مطلوب إدخال السعر")]),
+  priceInUsd: z.union([z.string(), z.number().min(1, "مطلوب إدخال السعر")]),
   stock: z.union([z.string(), z.number().min(1, "مطلوب إدخال الكمية")]),
   category: z.string().min(1, "مطلوب اختيار الفئة"),
   images: z
@@ -64,6 +65,15 @@ export function ProductForm({ defaultValues }: { defaultValues?: any }) {
       label: "السعر",
       type: "number",
       validation: productValidation.price,
+      placeholder: "أدخل السعر",
+      props: { step: "0.01" },
+      component: "input",
+    },
+    {
+      name: "priceInUsd",
+      label: "السعر بالدولار   ",
+      type: "number",
+      validation: productValidation.priceInUsd,
       placeholder: "أدخل السعر",
       props: { step: "0.01" },
       component: "input",

@@ -151,7 +151,7 @@ export function OrderForm({ defaultValues }: { defaultValues?: any }) {
           description: "تم إرسال التأكيد إلى بريدك الإلكتروني",
         });
 
-        if (!defaultValues) router.push("/thank-you");
+        if (!defaultValues) router.push(`/thank-you?orderId=${res.data._id}`);
       } catch (err) {
         console.error("Email sending failed:", err);
         toast({

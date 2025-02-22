@@ -54,7 +54,11 @@ export default async function ProductPage({ params }: { params: { id: string } }
           <h1 className="text-3xl font-bold">{productData.data.title}</h1>
           <p className="text-gray-600">{productData.data.description}</p>
           <div className="flex items-center gap-4">
-            <PriceDisplay basePrice={productData.data.price} salePrice={productData.data.sale} />
+            <PriceDisplay
+              usdPrice={productData.data.priceInUsd || 0}
+              basePrice={productData.data.price}
+              salePrice={productData.data.sale}
+            />
           </div>
           <AddToCart product={productData.data} />
         </div>

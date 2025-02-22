@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Globe } from "lucide-react";
+import { FaFacebook, FaInstagram, FaTelegram, FaWhatsapp } from "react-icons/fa";
 
 const footerImages = ["/kid1.avif", "/kid2.jpg", "/kid3.jpg", "/kid4.jpg", "/kid5.webp", "/kid6.jpg"];
 
@@ -118,30 +118,31 @@ export default function Footer() {
         {/* Social Media & Delivery */}
         <div className="max-w-7xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-xl font-semibold mb-4">Delivery</h3>
-            <div className="space-y-2">
-              <Link href="/delivery" className="text-sm block hover:underline">
-                Free Delivery
+            <h3 className="text-xl font-semibold mb-4">تواصل معنا </h3>
+            <div className="flex items-center  gap-3">
+              <Link
+                href="https://instagram.com/muslim_kids_muslimkids"
+                className="hover:text-yellow-300 transition-colors"
+              >
+                <FaInstagram className="w-8 h-8" />
               </Link>
-              <Link href="/faq" className="text-sm block hover:underline">
-                FAQ
+              <Link
+                href="https://www.facebook.com/share/12J6vPgbB4V/
+"
+                className="hover:text-yellow-300 transition-colors"
+              >
+                <FaFacebook className="w-8 h-8" />
               </Link>
-            </div>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-4">Social Media</h3>
-            <div className="flex gap-4">
-              <Link href="#" className="hover:text-yellow-300 transition-colors">
-                <Twitter size={24} />
-              </Link>
-              <Link href="#" className="hover:text-yellow-300 transition-colors">
-                <Globe size={24} />
-              </Link>
-              <Link href="#" className="hover:text-yellow-300 transition-colors">
-                <Facebook size={24} />
-              </Link>
-              <Link href="#" className="hover:text-yellow-300 transition-colors">
-                <Instagram size={24} />
+              <a
+                href={`https://wa.me/201552269233`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2   text-white rounded hover:bg-green-600 transition-colors "
+              >
+                <FaWhatsapp className="w-8 h-8" />
+              </a>
+              <Link href="https://t.me/MUSLIM_KIDS_EG" className="hover:text-yellow-300 transition-colors">
+                <FaTelegram className="w-8 h-8" />
               </Link>
             </div>
           </div>
@@ -151,12 +152,11 @@ export default function Footer() {
       {/* Copyright & Payment Methods */}
       <div className="bg-[#FFD93D] px-4 py-4">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">
-            BY
-            <Link target="_blank" href={"https://noor-hesham-boi.io"}>
-              Noor Hesham
+          <p className="text-sm w-full justify-between flex items-center gap-2 ">
+            @2025 كل الحقوق محفوظة لدى Muslim Kids .
+            <Link className=" font-semibold text-lg underline pb-5" target="_blank" href={"https://noor-hesham-boi.io"}>
+              BY Noor Hesham
             </Link>{" "}
-            @2025 All Rights Reserved.
           </p>
           {/* <div className="flex gap-2">
             <Image src="/visa.svg" alt="Visa" width={40} height={25} />

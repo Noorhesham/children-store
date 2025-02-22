@@ -61,7 +61,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
       <div className="space-y-2">
         <div className="text-sm text-gray-500 uppercase">{product.category.name}</div>
         <h3 className="font-semibold truncate">{product.title}</h3>
-        <PriceDisplay basePrice={product.price} salePrice={salePrice} />
+        <PriceDisplay usdPrice={product.priceInUsd || 0} basePrice={product.price} salePrice={salePrice} />
       </div>
     </Link>
   );

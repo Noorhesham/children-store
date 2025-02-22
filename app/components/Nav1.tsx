@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
 import { Search, User, Heart, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTelegram, FaWhatsapp } from "react-icons/fa";
 import MaxWidthWrapper from "./defaults/MaxWidthWrapper";
 
 const Nav1 = () => {
@@ -11,15 +11,19 @@ const Nav1 = () => {
       <MaxWidthWrapper noPadding className=" py-2 mx-auto flex items-center justify-center">
         {/* Social Links */}
         <div className="flex items-center  gap-3">
-          <Link href="https://instagram.com" className="text-rose-400 hover:opacity-75">
+          <Link href="https://instagram.com/muslim_kids_muslimkids" className="text-rose-400 hover:opacity-75">
             <FaInstagram className="w-4 h-4" />
           </Link>
-          <Link href="https://facebook.com" className="text-rose-400 hover:opacity-75">
+          <Link
+            href="https://www.facebook.com/share/12J6vPgbB4V/
+"
+            className="text-rose-400 hover:opacity-75"
+          >
             <FaFacebook className="w-4 h-4" />
           </Link>
 
-          <Link href="https://twitter.com" className="text-rose-400 hover:opacity-75">
-            <FaWhatsapp className="w-4 h-4" />
+          <Link href="https://t.me/MUSLIM_KIDS_EG" className="text-rose-400 hover:opacity-75">
+            <FaTelegram className="w-4 h-4" />
           </Link>
         </div>
 

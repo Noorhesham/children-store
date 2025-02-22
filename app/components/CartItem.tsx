@@ -18,7 +18,11 @@ const CartItem = ({ item }: { item: any }) => {
         </div>
         <div className="flex-1">
           <h3 className="font-semibold">{item.product.title}</h3>
-          <PriceDisplay basePrice={item.product.price} salePrice={item.product.sale || 0} />
+          <PriceDisplay
+            usdPrice={item.product.priceInUsd || 0}
+            basePrice={item.product.price}
+            salePrice={item.product.sale || 0}
+          />
           <div className="flex items-center gap-2 mt-2">
             <Button
               variant="outline"
@@ -39,7 +43,7 @@ const CartItem = ({ item }: { item: any }) => {
             </Button>
           </div>
         </div>
-        <PriceDisplay basePrice={item.price * item.quantity} />
+        <PriceDisplay usdPrice={item.priceInUsd || 0} basePrice={item.price * item.quantity} />
       </div>
     </div>
   );
