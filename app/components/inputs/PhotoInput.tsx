@@ -36,7 +36,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
 
         const results = await Promise.all(uploadPromises);
         const newImages: ImageType[] = results.map((res) => ({
-          secure_url: res.url,
+          secure_url: res?.url,
           publicId: res.fileId,
         }));
 
@@ -73,7 +73,7 @@ export const PhotoInput = ({ name, value = [] }: PhotoInputProps) => {
         {currentImages.map((image: ImageType, index: number) => (
           <div key={index} className="relative w-full h-44 group">
             <Image
-              src={image.secure_url}
+              src={image?.secure_url}
               alt={`Upload ${index + 1}`}
               fill
               className="rounded-lg w-full object-cover aspect-square"
