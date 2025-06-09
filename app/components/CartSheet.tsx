@@ -40,7 +40,7 @@ export function CartSheet() {
               <div className="border-t pt-4">
                 <div className="flex justify-between items-center mb-4">
                   <span className="font-semibold">المجموع</span>
-                  <span className="font-semibold">{total} ريال</span>
+                  <span className="font-semibold">{total} جنيه</span>
                 </div>
                 <Button className="w-full" onClick={() => setIsOpen(false)} asChild>
                   <Link href="/orders">إتمام الطلب</Link>
