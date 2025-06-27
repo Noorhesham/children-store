@@ -6,6 +6,7 @@ export interface IProduct {
   title: string;
   description: string;
   price: number;
+  priceInUsd: number;
   stock: number;
   category: {
     name: string;

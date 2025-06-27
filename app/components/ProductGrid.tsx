@@ -25,6 +25,7 @@ export default async function ProductGrid({ categories, query, page, limit }: Pr
     .populate("category")
     .lean();
   const productsObj = JSON.parse(JSON.stringify(products));
+  console.log(productsObj);
   const totalPages = Math.ceil((await product.countDocuments(query).lean()) / limit);
   return (
     <div className="space-y-8 flex overflow-hidden flex-col items-center ">

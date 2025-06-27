@@ -23,7 +23,7 @@ export default async function Home({ searchParams }: PageProps) {
   const limit = 8;
   const query = searchParams.category ? { category: searchParams.category } : {};
   const productsAboutTOFinish = await Product.find({}).limit(4).sort({ stock: 1 }).lean();
-
+  console.log(productsAboutTOFinish);
   return (
     <section className="">
       <HeroSection />

@@ -2,16 +2,30 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { useCart } from "../utils/CartProvider";
 import { PriceDisplay } from "./PriceDisplay";
+import { IProduct } from "../types";
 
-const CartItem = ({ item }: { item: any }) => {
+interface CartItemProps {
+  item: {
+    product: IProduct;
+    quantity: number;
+  };
+  isEgypt: boolean;
+}
+
+const CartItem = ({ item, isEgypt }: CartItemProps) => {
   const { updateQuantity } = useCart();
+  const itemTotal = isEgypt ? item.product.price * item.quantity : (item.product.priceInUsd || 0) * item.quantity;
 
   return (
     <div>
       <div key={item.product._id} className="flex gap-4 border-b pb-4">
         <div className="w-20 h-20 relative rounded-lg overflow-hidden">
           <img
-            src={typeof item.product.images?.[0] === "string" ? item.product.images?.[0] : item.product.images?.[0].secure_url}
+            src={
+              typeof item.product.images?.[0] === "string"
+                ? item.product.images?.[0]
+                : item.product.images?.[0].secure_url
+            }
             alt={item.product.title}
             className="object-cover w-full h-full"
           />
@@ -22,6 +36,7 @@ const CartItem = ({ item }: { item: any }) => {
             usdPrice={item.product.priceInUsd || 0}
             basePrice={item.product.price}
             salePrice={item.product.sale || 0}
+            isEgypt={isEgypt}
           />
           <div className="flex items-center gap-2 mt-2">
             <Button
@@ -43,7 +58,12 @@ const CartItem = ({ item }: { item: any }) => {
             </Button>
           </div>
         </div>
-        <PriceDisplay usdPrice={item.priceInUsd || 0} basePrice={item.price * item.quantity} />
+        <PriceDisplay
+          usdPrice={item.product.priceInUsd || 0}
+          basePrice={item.product.price}
+          isEgypt={isEgypt}
+          className="font-semibold"
+        />
       </div>
     </div>
   );

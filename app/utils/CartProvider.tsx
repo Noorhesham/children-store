@@ -3,23 +3,18 @@
 
 import { useToast } from "@/hooks/use-toast";
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { IProduct } from "../types";
 
 interface CartItem {
-  product: {
-    _id: string;
-    title: string;
-    price: number;
-    stock: number;
-    images: Array<{ secure_url: string }>;
-  };
+  product: IProduct;
   quantity: number;
-  price: number;
 }
 
 interface CartContextType {
   items: CartItem[];
   itemCount: number;
   total: number;
+  totalUsd: number;
   addItem: (product: CartItem["product"], quantity: number) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   removeItem: (productId: string) => void;
@@ -46,7 +41,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const totalUsd = items.reduce((sum, item) => sum + (item.product.priceInUsd || 0) * item.quantity, 0);
 
   const addItem = useCallback(
     (product: CartItem["product"], quantity: number) => {
@@ -59,7 +55,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           );
         }
 
-        return [...currentItems, { product, quantity, price: product.price }];
+        return [...currentItems, { product, quantity }];
       });
 
       toast({
@@ -94,6 +90,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         items,
         itemCount,
         total,
+        totalUsd,
         addItem,
         updateQuantity,
         removeItem,

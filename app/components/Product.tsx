@@ -5,10 +5,48 @@ import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 import { IProduct } from "../types";
 import { PriceDisplay } from "./PriceDisplay";
+import { useEffect, useState } from "react";
+
+// Egypt's approximate coordinates
+const EGYPT_BOUNDS = {
+  north: 31.8, // Northernmost point
+  south: 22.0, // Southernmost point
+  east: 36.9, // Easternmost point
+  west: 24.7, // Westernmost point
+};
 
 export default function ProductCard({ product }: { product: IProduct }) {
   const salePrice = product.price - product.sale || 0;
   const { toast } = useToast();
+  const [isEgypt, setIsEgypt] = useState(true);
+
+  useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          // Check if coordinates are within Egypt's bounds
+          const isInEgypt =
+            latitude >= EGYPT_BOUNDS.south &&
+            latitude <= EGYPT_BOUNDS.north &&
+            longitude >= EGYPT_BOUNDS.west &&
+            longitude <= EGYPT_BOUNDS.east;
+
+          setIsEgypt(isInEgypt);
+        },
+        (error) => {
+          // If error or permission denied, default to Egypt
+          console.log("Geolocation error:", error);
+          setIsEgypt(true);
+        }
+      );
+    } else {
+      // If geolocation is not supported, default to Egypt
+      setIsEgypt(true);
+    }
+  }, []);
+
   const handleShare = async (e: React.MouseEvent) => {
     e.preventDefault();
     const url = `${window.location.origin}/product/${product._id}`;
@@ -52,6 +90,7 @@ export default function ProductCard({ product }: { product: IProduct }) {
         </button> */}
         <button
           onClick={handleShare}
+          aria-label="Share product"
           className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50"
         >
           <Share2 className="w-4 h-4 text-gray-600" />
@@ -61,7 +100,12 @@ export default function ProductCard({ product }: { product: IProduct }) {
       <div className="space-y-2">
         <div className="text-sm text-gray-500 uppercase">{product.category.name}</div>
         <h3 className="font-semibold truncate">{product.title}</h3>
-        <PriceDisplay usdPrice={product.priceInUsd || 0} basePrice={product.price} salePrice={salePrice} />
+        <PriceDisplay
+          usdPrice={product.priceInUsd || 0}
+          basePrice={product.price}
+          salePrice={salePrice}
+          isEgypt={isEgypt}
+        />
       </div>
     </Link>
   );

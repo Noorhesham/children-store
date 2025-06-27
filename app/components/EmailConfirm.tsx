@@ -68,7 +68,7 @@ export const ReceiptEmail = ({ email, date, orderId, products, total }: ReceiptE
                           textDecoration: "underline",
                         }}
                       >
-                        noordragon2004@gmail.com
+                        ma3914364@gmail.com
                       </Link>
                     </Column>
                   </Row>
@@ -134,7 +134,7 @@ export const ReceiptEmail = ({ email, date, orderId, products, total }: ReceiptE
                       Write a Review
                     </Link>
                     <span style={divisor}>|</span>
-                    <Link style={productLink}>Report a Problem and contact noordragon2004@gmail.com</Link>
+                    <Link style={productLink}>Report a Problem and contactma3914364@gmail.com</Link>
                   </Column>
 
                   <Column style={productPriceWrapper} align="right">
