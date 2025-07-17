@@ -9,11 +9,11 @@ const benefits = [
     title: "منتجات آمنة",
     description: "جميع منتجاتنا مطابقة للمعايير الإسلامية والتربوية",
   },
-  {
-    icon: <Truck className="w-10 h-10 text-blue-600" />,
-    title: "توصيل سريع",
-    description: "توصيل مجاني لجميع الطلبات  ",
-  },
+  // {
+  //   icon: <Truck className="w-10 h-10 text-blue-600" />,
+  //   title: "توصيل سريع",
+  //   description: "توصيل مجاني لجميع الطلبات  ",
+  // },
   //   {
   //     icon: <HeadphonesIcon className="w-10 h-10 text-purple-600" />,
   //     title: "دعم متواصل",
