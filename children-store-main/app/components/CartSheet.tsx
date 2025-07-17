@@ -1,7 +1,7 @@
 // components/CartSheet.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { ShoppingCart } from "lucide-react";
@@ -10,30 +10,9 @@ import { useCart } from "../utils/CartProvider";
 import CartItem from "./CartItem";
 
 export function CartSheet() {
-  const { items, itemCount, total, totalUsd } = useCart();
+  const { items, itemCount, total } = useCart();
   const [isOpen, setIsOpen] = useState(false);
-  const [isEgypt, setIsEgypt] = useState(true); // default to Egypt
-
-  useEffect(() => {
-    const detectCountry = async () => {
-      try {
-        const res = await fetch("https://ipapi.co/json");
-        const data = await res.json();
-
-        if (data && data.country) {
-          setIsEgypt(data.country === "EG"); // "EG" is Egypt's ISO code
-        } else {
-          setIsEgypt(true); // fallback
-        }
-      } catch (error) {
-        console.error("IP location error:", error);
-        setIsEgypt(true); // fallback
-      }
-    };
-
-    detectCountry();
-  }, []);
-
+  console.log(items);
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
@@ -46,7 +25,7 @@ export function CartSheet() {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full overflow-y-scroll sm:max-w-lg">
+      <SheetContent className="w-full sm:max-w-lg">
         <SheetHeader>
           <SheetTitle>سلة التسوق</SheetTitle>
         </SheetHeader>
@@ -56,12 +35,12 @@ export function CartSheet() {
           ) : (
             <>
               {items.map((item, i) => (
-                <CartItem item={item} key={i} isEgypt={isEgypt} />
+                <CartItem item={item} key={i} />
               ))}
               <div className="border-t pt-4">
                 <div className="flex justify-between items-center mb-4">
                   <span className="font-semibold">المجموع</span>
-                  <span className="font-semibold">{isEgypt ? `${total} ج.م` : `$${totalUsd.toFixed(2)}`}</span>
+                  <span className="font-semibold">{total} ريال</span>
                 </div>
                 <Button className="w-full" onClick={() => setIsOpen(false)} asChild>
                   <Link href="/orders">إتمام الطلب</Link>
