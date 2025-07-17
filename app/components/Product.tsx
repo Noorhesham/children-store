@@ -21,30 +21,23 @@ export default function ProductCard({ product }: { product: IProduct }) {
   const [isEgypt, setIsEgypt] = useState(true);
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
+    const detectCountry = async () => {
+      try {
+        const res = await fetch("https://ipapi.co/json");
+        const data = await res.json();
 
-          // Check if coordinates are within Egypt's bounds
-          const isInEgypt =
-            latitude >= EGYPT_BOUNDS.south &&
-            latitude <= EGYPT_BOUNDS.north &&
-            longitude >= EGYPT_BOUNDS.west &&
-            longitude <= EGYPT_BOUNDS.east;
-
-          setIsEgypt(isInEgypt);
-        },
-        (error) => {
-          // If error or permission denied, default to Egypt
-          console.log("Geolocation error:", error);
-          setIsEgypt(true);
+        if (data && data.country) {
+          setIsEgypt(data.country === "EG");
+        } else {
+          setIsEgypt(true); // fallback
         }
-      );
-    } else {
-      // If geolocation is not supported, default to Egypt
-      setIsEgypt(true);
-    }
+      } catch (error) {
+        console.error("IP location error:", error);
+        setIsEgypt(true); // fallback
+      }
+    };
+
+    detectCountry();
   }, []);
 
   const handleShare = async (e: React.MouseEvent) => {
